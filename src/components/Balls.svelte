@@ -55,15 +55,14 @@
     align-items: center;
     height: 6em;
   }
-  .lastballs > div {
-    height: 4em;
-    width: 4em;
-    margin: .5em;
+  .lastballs > div {height: 1.5em;
+    width: 1.5em;
+    margin: .2em;
     flex-shrink: 0;
+    font-size: 2.5em;
   }
-  .lastballs > div:first-child {
-    height: 5em;
-    width: 5em;
+  .lastballs > div:first-child { 
+    font-size: 4em;
   }
 </style>
 

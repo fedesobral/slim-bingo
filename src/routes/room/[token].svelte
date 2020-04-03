@@ -133,6 +133,7 @@
   }
   .users {
     width: 12em;
+    margin-top: 2em;
   }
   .game {
     display: flex;

@@ -1,0 +1,3 @@
+nodeProcessCommandLine: "C:\Program Files\nodejs\node.exe"
+node_env: production
+devErrorsEnabled: true

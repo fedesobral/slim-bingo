@@ -31,7 +31,7 @@
     ev.stopPropagation();
     ev.preventDefault();
 
-    const res = await window.fetch("/room", {
+    const res = await window.fetch("room", {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -45,7 +45,7 @@
     if (res.status === 200) {
       player.set({...data.player,cards: []});
       socket.emit('add user', {username: $player.name, room: $room.id});
-      goto(`/room/${data.token}`);
+      goto(`room/${data.token}`);
     }
 
     return false;

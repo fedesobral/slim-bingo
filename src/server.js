@@ -14,6 +14,7 @@ const dev = NODE_ENV === 'development';
 
 polka({ server }) // You can also use Express
 	.use(
+		// 'slim-bingo',
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
 		json(),
@@ -25,7 +26,9 @@ polka({ server }) // You can also use Express
 
 // room
 let rooms = {};
-io(server).on('connection', socket => {
+io(server
+	// , {path: '/slim-bingo/socket.io'} 
+).on('connection', socket => {
 	let added = false;
 
 	socket.on('pop ball', ({ ball }) => {

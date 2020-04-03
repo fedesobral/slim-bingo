@@ -26,10 +26,15 @@
     align-content: center;
     align-self: center;
     text-align: center;
-    height: 100%;
+    height: 2em;
+    width: 2em;
     line-height: 1.9em;
     border-top: 1px solid var(--color1);
     border-left: 1px solid var(--color1);
+  }
+  img {
+    height: 100%;
+    object-fit: cover;
   }
   .clickable > div {
     cursor: pointer;
@@ -45,8 +50,8 @@
     overflow: hidden;
   }
 
-  .lastballs-container>div:last-child {
-    margin: 0 0 .5em .5em;
+  .lastballs-container > div:last-child {
+    margin: 0 0 0.5em 0.5em;
   }
   .lastballs {
     display: flex;
@@ -55,13 +60,14 @@
     align-items: center;
     height: 6em;
   }
-  .lastballs > div {height: 1.5em;
+  .lastballs > div {
+    height: 1.5em;
     width: 1.5em;
-    margin: .2em;
+    margin: 0.2em;
     flex-shrink: 0;
     font-size: 2.5em;
   }
-  .lastballs > div:first-child { 
+  .lastballs > div:first-child {
     font-size: 4em;
   }
 </style>
@@ -70,13 +76,21 @@
   <label>Last balls</label>
   <div class="lastballs">
     {#each pops as ball, i (ball.id)}
-      <div class="popedball">{ball.text}</div>
+      <div class="popedball">
+            {#if ball.img}
+        <img alt={ball.text} src={ball.img} />
+      {:else}{ball.text}{/if}
+      </div>
     {/each}
   </div>
-  <div>{(pops.length&&pops[0].desc)||''}</div>
+  <div>{(pops.length && pops[0].desc) || ''}</div>
 </div>
 <div id="container" style="--size:{size}" class:clickable={admin}>
   {#each balls as ball, i (ball.id)}
-    <div class:checked={ball.checked} title={ball.text}>{ball.text}</div>
+    <div class:checked={ball.checked} title={ball.text}>
+      {#if ball.img}
+        <img alt={ball.text} src={ball.img} />
+      {:else}{ball.text}{/if}
+    </div>
   {/each}
 </div>

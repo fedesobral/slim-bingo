@@ -1,4 +1,5 @@
-export function createCard() {
+export function createCard(balls) {
+    const maxNumber = balls.length;
     const max = 12;
     const maxUsed = 7;
     const used = {};
@@ -9,10 +10,11 @@ export function createCard() {
         let val = -1;
         if ((getRandomInt(10) % 2 == 1 && count < maxUsed) || max - maxUsed == i - count || disabledCount == 2) {
             while (val == -1 || used[val]) {
-                val = getRandomInt(100);
+                val = getRandomInt(maxNumber);
             }
             used[val] = true;
-            data.push({ id: val, text: val, checked: false });
+            const {text, cardImg: img } = balls[val];
+            data.push({ id: val, text, img , checked: false });
             ++count;
             disabledCount=0;
         } else {
@@ -27,10 +29,10 @@ export function createCard() {
     return data;
 }
 
-export function createCards(count){
+export function createCards(count, balls){
     let cards = [];
     for (let i = 0; i < count; i++) {
-      cards.push(createCard());      
+      cards.push(createCard(balls));      
     }
     return cards;
 }

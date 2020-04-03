@@ -13,7 +13,7 @@
 
 <style>
   #container {
-    height: 8em;
+    height: 10em;
     width: calc(100% - 2em);
     display: inline-grid;
     grid-template-columns: repeat(var(--cols), 1fr);
@@ -25,11 +25,20 @@
     align-content: center;
     align-self: center;
     text-align: center;
-    height: 100%;
+    height: 5em;
     line-height: 3.9em;
     border-top: 1px solid var(--color2);
     border-left: 1px solid var(--color2);
     cursor: pointer;
+    overflow: hidden;
+  }
+  span {
+    font-size: 2.5em;
+  }
+  img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
   }
   .disabled {
     background: var(--color2);
@@ -45,7 +54,11 @@
       class:disabled={cell.id == -1}
       class:checked={cell.checked}
       on:click={() => onClick(cell, i)}>
-      {cell.text}
+      {#if cell.img}
+        <img alt={cell.text} src={cell.img} />
+      {:else}
+        <span>{cell.text}</span>
+      {/if}
     </div>
   {/each}
 </div>

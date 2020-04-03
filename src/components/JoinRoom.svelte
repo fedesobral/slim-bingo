@@ -2,10 +2,11 @@
   import {createCards} from '../cards.js';
   import { player, socket } from '../store.js';
   export let room = null;
+  export let balls = [];
   let name = "";
 
   const joinRoom = ev => {
-    player.set({ id: '', name, creator: false, cards: createCards(room.cardsAmount) });
+    player.set({ id: '', name, creator: false, cards: createCards(room.cardsAmount, balls) });
     socket.emit('add user', {username: $player.name, room: room.id});
 
     ev.stopPropagation();

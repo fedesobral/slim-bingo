@@ -22,6 +22,7 @@
   import Card from "../../components/Card.svelte";
   import Invite from "../../components/Invite.svelte";
   import { player, room as roomData, socket } from "../../store.js";
+  import { createCards } from "../../cards.js";
 
   export let room = null;
   export let balls = [];
@@ -40,6 +41,10 @@
         balls = data.dataSet;
       }
     }
+    if ($player && $player.isPlayer) {
+      $player.cards = createCards(room.cardsAmount, balls);
+      $player.cards = $player.cards;
+    }
   });
 
   socket.on("user joined", ({ username, userId }) => {
@@ -53,18 +58,21 @@
   if ($player && $player.creator) {
     if ($player.isPlayer) users[0] = { id: $player.id, name: $player.name };
   } else {
-    socket.on("login", ({ userId, username, pops: popsList, users: usersList }) => {
-      console.log(users);
-      popsList.forEach(p => {
-        $player.id = userId;
-        const i = balls.findIndex(b => b.id == p);
-        const ball = { ...balls[i], checked: true };
-        balls[i] = ball;
-        pops.push(ball);
-      });
-      pops = pops.reverse();
-      users = usersList;
-    });
+    socket.on(
+      "login",
+      ({ userId, username, pops: popsList, users: usersList }) => {
+        console.log(users);
+        popsList.forEach(p => {
+          $player.id = userId;
+          const i = balls.findIndex(b => b.id == p);
+          const ball = { ...balls[i], checked: true };
+          balls[i] = ball;
+          pops.push(ball);
+        });
+        pops = pops.reverse();
+        users = usersList;
+      }
+    );
     socket.on("pop ball", ({ ball }) => {
       console.log("pop", ball);
       const i = balls.findIndex(e => e.id == ball);
@@ -110,7 +118,7 @@
 <style>
   .main.room {
     min-width: 40em;
-    max-width: 62em;
+    max-width: 70em;
     width: calc(100% - 4em);
   }
 
@@ -162,7 +170,7 @@
 </style>
 
 {#if !$player}
-  <JoinRoom {room} />
+  <JoinRoom {room} {balls} />
 {:else}
 
   <div class="main room">
@@ -177,7 +185,7 @@
             <button on:click={onPop}>Pop</button>
           {/if}
         </div>
-        <Balls {balls} admin={true} pops={pops} />
+        <Balls {balls} admin={true} {pops} />
       </div>
       <div class="users">
         <label>Users</label>

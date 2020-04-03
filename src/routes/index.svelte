@@ -16,7 +16,6 @@
 <script>
   import { goto } from "@sapper/app";
   import { player, room, socket } from "../store.js";
-  import { createCards } from "../cards.js";
 
   export let balls = [];
 
@@ -44,7 +43,7 @@
     room.set({...roomData, id: data.id});
 
     if (res.status === 200) {
-      player.set({...data.player,cards: createCards(roomData.cardsAmount)});
+      player.set({...data.player,cards: []});
       socket.emit('add user', {username: $player.name, room: $room.id});
       goto(`/room/${data.token}`);
     }
